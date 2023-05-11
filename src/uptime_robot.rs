@@ -25,11 +25,12 @@ pub struct Monitors {
     pub url: String,
     pub status: MonitorStatus,
     pub response_times: Vec<ResponseTime>,
+    pub custom_uptime_ratio: String,
 }
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct ResponseTime {
-    pub value: u16,
+    pub value: f64,
 }
 
 #[derive(Deserialize_repr, Debug, Clone)]
@@ -40,6 +41,18 @@ pub enum MonitorStatus {
     Up = 2,
     SeemsDown = 8,
     Down = 9,
+}
+
+impl std::fmt::Display for MonitorStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            MonitorStatus::Paused => write!(f, "paused"),
+            MonitorStatus::NotCheckedYet => write!(f, "not_checked_yet"),
+            MonitorStatus::Up => write!(f, "up"),
+            MonitorStatus::SeemsDown => write!(f, "seems_down"),
+            MonitorStatus::Down => write!(f, "down"),
+        }
+    }
 }
 
 impl Client {
@@ -59,6 +72,7 @@ impl Client {
             ("format", &String::from("json")),
             ("response_times", &String::from("1")), // ask for response time in response
             ("response_times_limit", &String::from("1")), // only get the last
+            ("custom_uptime_ratios", &String::from("1-7-30")), // 1d, 7d, 30d
         ];
 
         let response = self

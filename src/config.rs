@@ -12,7 +12,7 @@ pub struct Config {
     #[envconfig(from = "SERVER_HOST", default = "0.0.0.0:9882")]
     pub server_host: String,
 
-    #[envconfig(from = "COLLECTOR_INTERVAL_SECONDS", default = "10")]
+    #[envconfig(from = "COLLECTOR_INTERVAL_SECONDS", default = "60")]
     pub collector_interval: u64,
 }
 
