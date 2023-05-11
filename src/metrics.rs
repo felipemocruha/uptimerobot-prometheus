@@ -27,7 +27,7 @@ impl Metrics {
 
         let response_time = HistogramVec::new(
             HistogramOpts::new(
-                "uptime_robot_response_time_millis",
+                "uptime_robot_response_time_seconds",
                 "Last recorded response_time from monitor in milliseconds",
             ),
             &["monitor", "status"],
@@ -71,13 +71,13 @@ impl Metrics {
         registry.register(Box::new(uptime_30d.clone()))?;
 
         Ok(Metrics {
-            registry: registry,
-            collector_executions: collector_executions,
-            response_time: response_time,
-            monitor_status: monitor_status,
-            uptime_1d: uptime_1d,
-            uptime_7d: uptime_7d,
-            uptime_30d: uptime_30d,
+            registry,
+            collector_executions,
+            response_time,
+            monitor_status,
+            uptime_1d,
+            uptime_7d,
+            uptime_30d,
         })
     }
 }
