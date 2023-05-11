@@ -1157,7 +1157,6 @@ dependencies = [
  "dotenv",
  "envconfig",
  "futures",
- "lazy_static",
  "log",
  "prometheus",
  "reqwest",
